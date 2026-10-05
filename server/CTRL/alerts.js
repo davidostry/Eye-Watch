@@ -19,12 +19,7 @@ export async function addAlert(req, res) {
 export async function findAllAlerts(req, res) {
     try {
         const allAlerts = await getAllAlerts()
-        console.log(allAlerts);
-
         if (!allAlerts) return res.status(500).json({ message: "failed to get all alerts" });
-
-        console.log(allAlerts);
-
         res.json(allAlerts)
 
     } catch (error) {

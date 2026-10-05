@@ -148,9 +148,7 @@ function AlertForm({
         >
 
             <h2>
-                {alert
-                    ? "Edit Alert"
-                    : "Add Alert"}
+                {alert ? "Edit Alert" : "Add Alert"}
             </h2>
 
             {error && (
