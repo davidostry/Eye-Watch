@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import type { Alert } from "../api/api";
 
-type AuthState = {
+type State = {
 
 alert: Alert | null;
 
@@ -11,7 +11,7 @@ setAlert: (alert:Alert) => void;
 
 };
 
-const useAuthStore = create<AuthState>((set) => ({
+const useStore = create<State>((set) => ({
 
 alert: null,
 
@@ -25,4 +25,4 @@ setAlert: (alert) => {
 
 }));
 
-export default useAuthStore;
+export default useStore;

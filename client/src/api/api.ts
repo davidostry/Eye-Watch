@@ -1,80 +1,53 @@
-const API_URL = "http://localhost:3001/api/alerts";
+import axios from "axios";
 
+import type {
+    Alert,
+    AlertInput
+} from "../types/alert";
 
-export type Alert = {
-        displayName: string,
-    description: string,
-    priority: string,
-    arena: string,
-    status: string,
-    lon: number,
-    lat: number
-}
-
-async function request<T>(
-endpoint: string,
-options: RequestInit = {}
-): Promise<T> {
-const response = await fetch(`${API_URL}${endpoint}`, {
-...options,
-headers: {
-"Content-Type": "application/json"
-}
+const api = axios.create({
+    baseURL: "http://localhost:3001/api"
 });
 
-const data = await response.json();
+export async function getAlerts(): Promise<Alert[]> {
+    const response = await api.get<Alert[]>("/alerts");
 
-if (!response.ok) {
-    throw new Error(data.message || "Request failed");
+    return response.data;
 }
 
-return data;
+export async function getAlertById(
+    id: string
+): Promise<Alert> {
+    const response = await api.get<Alert>(`/alerts/${id}`);
 
-
+    return response.data;
 }
 
+export async function createAlert(
+    alert: AlertInput
+): Promise<Alert> {
+    const response = await api.post<Alert>(
+        "/alerts",
+        alert
+    );
 
-
-
-
-
-
-export async function createAlert(alert:Alert){
-    return request("/",{
-        method:"POST",
-        body: JSON.stringify(alert)
-    })
+    return response.data;
 }
 
-export async function createTask(
-token: string,
-title: string,
-completed: boolean
-) {
-return request("/tasks", {
-method: "POST",
-headers: {
-Authorization: `Bearer ${token}`
-},
-body: JSON.stringify({
-title,
-completed
-})
-});
+export async function updateAlert(
+    id: string,
+    alert: AlertInput
+): Promise<Alert> {
+    const response = await api.put<Alert>(
+        `/alerts/${id}`,
+        alert
+    );
+
+    return response.data;
 }
 
-export async function getTaskById(token: string, id: string) {
-return request<Task>(`/tasks/${id}`, {
-headers: {
-Authorization: `Bearer ${token}`
-}
-});
-}
-
-export async function getTasks(token: string) {
-return request<Task[]>("/tasks", {
-headers: {
-Authorization: `Bearer ${token}`
-}
-});
+export async function deleteAlert(
+    id: string
+): Promise<void> {
+    await api.delete(`/alerts/${id}`);
 }
