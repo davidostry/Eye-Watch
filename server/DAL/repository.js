@@ -1,4 +1,4 @@
-import { db } from "../DB/config";
+import { db } from "../DB/config.js";
 import { ObjectId } from "mongodb";
 
 const alerts = db.collection("alerts");
