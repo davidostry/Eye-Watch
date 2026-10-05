@@ -1,4 +1,4 @@
-import { createAlert, getAllAlerts } from "../DAL/repository.js";
+import { createAlert, getAlertById, getAllAlerts } from "../DAL/repository.js";
 import { alertSchma } from "../schemas/alertSchema.js";
 
 export async function addAlert(req, res) {
@@ -22,9 +22,9 @@ export async function findAllAlerts(req, res) {
         console.log(allAlerts);
 
         if (!allAlerts) return res.status(500).json({ message: "failed to get all alerts" });
-       
+
         console.log(allAlerts);
-        
+
         res.json(allAlerts)
 
     } catch (error) {
@@ -33,4 +33,19 @@ export async function findAllAlerts(req, res) {
         res.status(500).json({ message: "failed to get all alerts" });
     }
 
+}
+
+export async function findAlertById(req, res) {
+    try {
+
+        const { id } = req.params;
+        const alert = await getAlertById(id);
+        if (!alert) return res.status(404).json({ message: "alert not found" });
+        res.json(alert)
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "failed to get the alert" });
+
+    }
 }
