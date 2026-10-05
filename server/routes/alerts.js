@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addAlert, findAlertById, findAllAlerts, removeAlert } from "../CTRL/alerts.js";
+import { addAlert, editAlert, findAlertById, findAllAlerts, removeAlert } from "../CTRL/alerts.js";
 
 const router = Router();
 
@@ -10,5 +10,7 @@ router.get("/alerts", findAllAlerts);
 router.get("/alerts/:id", findAlertById);
 
 router.delete("/alerts/:id", removeAlert)
+
+router.put("/alerts/:id", editAlert)
 
 export default router;

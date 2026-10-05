@@ -16,7 +16,10 @@ export async function getAlertById(id){
 }
 
 export async function updateAlert(id, update){
-    return await alerts.updateOne({_id: new ObjectId(id)}, update)
+    return await alerts.findOneAndUpdate(
+        {_id: new ObjectId(id)},
+     {$set:update},
+    {returnDocument: 'after'})
 }
 
 export async function deleteAlert(id){

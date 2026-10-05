@@ -1,4 +1,4 @@
-import { createAlert, deleteAlert, getAlertById, getAllAlerts } from "../DAL/repository.js";
+import { createAlert, deleteAlert, getAlertById, getAllAlerts, updateAlert } from "../DAL/repository.js";
 import { alertSchma } from "../schemas/alertSchema.js";
 
 export async function addAlert(req, res) {
@@ -62,4 +62,24 @@ export async function removeAlert(req, res) {
         console.log(error);
         res.status(500).json({ message: "failed to delete the alert" });
     }
+}
+
+export async function editAlert(req, res) {
+    try {
+
+        const { id } = req.params;
+        const alert = await getAlertById(id);
+        if (!alert) return res.status(404).json({ message: "alert not found" });
+        const result = alertSchma.safeParse(req.body);
+        if (!result.success) return res.status(400).json({ message: "missing details" });
+
+        const updated = await updateAlert(id, result.data)
+        if (!updated) return res.status(500).json({ message: "failed to update the alert" });
+        res.json(updated)
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "failed to update the alert" });
+    }
+
 }
