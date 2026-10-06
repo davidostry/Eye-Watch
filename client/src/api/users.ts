@@ -40,7 +40,7 @@ export async function register(
 userName: string,
 email: string,
 password: string,
-token:string
+token:string | null
 ) {
 return request<User>("/register", {
 headers: {
