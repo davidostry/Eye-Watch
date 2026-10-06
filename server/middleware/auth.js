@@ -17,3 +17,13 @@ export function auth(req, res, next) {
 
     }
 }
+
+export function authorization(req, res, next){
+   
+    const {role} = req.headers;
+
+    if (!role) return res.status(400).json({message: "role is missing"});
+    if (role !== "admin") return res.status(403).json({ message: "Forbidden"});
+    next()
+   
+}
