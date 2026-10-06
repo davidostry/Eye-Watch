@@ -7,20 +7,50 @@ import AlertList from "./components/AlertList";
 import AlertDetails from "./components/AlertDetails";
 import Filters from "./components/Filters";
 import AlertsMap from "./components/AlertsMap";
-import type { Alert, Arena, Priority } from "./types/alert";
+
+import type {
+    Alert,
+    Arena,
+    Priority
+} from "./types/alert";
 
 function App() {
-    const alerts = useAlertStore((state) => state.alerts);
-    const loading = useAlertStore((state) => state.loading);
-    const error = useAlertStore((state) => state.error);
-    const fetchAlerts = useAlertStore((state) => state.fetchAlerts);
-    const removeAlert = useAlertStore((state) => state.removeAlert);
+    const alerts = useAlertStore(
+        (state) => state.alerts
+    );
+
+    const loading = useAlertStore(
+        (state) => state.loading
+    );
+
+    const error = useAlertStore(
+        (state) => state.error
+    );
+
+    const fetchAlerts = useAlertStore(
+        (state) => state.fetchAlerts
+    );
+
+    const removeAlert = useAlertStore(
+        (state) => state.removeAlert
+    );
+
     const [search, setSearch] = useState("");
-    const [arena, setArena] = useState<Arena | "">("");
-    const [priority, setPriority] = useState<Priority | "">("");
-    const [selectedAlert, setSelectedAlert] = useState<Alert | null>(null);
-    const [editingAlert, setEditingAlert] = useState<Alert | null>(null);
-    const [showForm, setShowForm] = useState(false);
+
+    const [arena, setArena] =
+        useState<Arena | "">("");
+
+    const [priority, setPriority] =
+        useState<Priority | "">("");
+
+    const [selectedAlert, setSelectedAlert] =
+        useState<Alert | null>(null);
+
+    const [editingAlert, setEditingAlert] =
+        useState<Alert | null>(null);
+
+    const [showForm, setShowForm] =
+        useState(false);
 
     useEffect(() => {
         fetchAlerts();
@@ -92,17 +122,13 @@ function App() {
         <div className="app">
 
             <header className="header">
-
                 <h1>
                     Eye Watch
                 </h1>
 
-                <button
-                    onClick={handleAdd}
-                >
+                <button onClick={handleAdd}>
                     Add Alert
                 </button>
-
             </header>
 
             {error && (
@@ -135,15 +161,9 @@ function App() {
                     ) : (
                         <AlertList
                             alerts={filteredAlerts}
-                            onSelect={
-                                setSelectedAlert
-                            }
-                            onEdit={
-                                handleEdit
-                            }
-                            onDelete={
-                                handleDelete
-                            }
+                            onSelect={setSelectedAlert}
+                            onEdit={handleEdit}
+                            onDelete={handleDelete}
                         />
                     )}
 
@@ -163,11 +183,16 @@ function App() {
                                     alert.displayName,
                                 priority:
                                     alert.priority,
-                                lat: alert.lat,
-                                lon: alert.lon
+                                lon: Number(
+                                    alert.lat
+                                ),
+                                lat: Number(
+                                    alert.lon
+                                )
                             })
                         )}
                     />
+                    
 
                 </section>
 
@@ -202,3 +227,4 @@ function App() {
 }
 
 export default App;
+
