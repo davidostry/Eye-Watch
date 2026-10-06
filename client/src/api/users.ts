@@ -26,11 +26,11 @@ return data;
 
 }
 
-export async function login(email: string, password: string) {
+export async function login(username: string, password: string) {
 return request<{ token: string }>("/login", {
 method: "POST",
 body: JSON.stringify({
-email,
+username,
 password
 })
 });

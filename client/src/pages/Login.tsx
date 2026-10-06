@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { login } from "../api/users";
 import {useAuthStore} from "../store/authStore";
+import "../style/login.css"
 
 function Login() {
 const navigate = useNavigate();
@@ -9,7 +10,7 @@ const navigate = useNavigate();
 
 const setToken = useAuthStore((state) => state.setToken);
 
-const [email, setEmail] = useState("");
+const [username, setUsername] = useState("");
 const [password, setPassword] = useState("");
 const [error, setError] = useState("");
 
@@ -19,11 +20,11 @@ async function handleSubmit(event: React.FormEvent) {
     try {
         setError("");
 
-        const data = await login(email, password);
+        const data = await login(username, password);
 
         setToken(data.token);
 
-        navigate("/tasks");
+        navigate("/mainPage");
     } catch (error) {
         if (error instanceof Error) {
             setError(error.message);
@@ -32,20 +33,20 @@ async function handleSubmit(event: React.FormEvent) {
 }
 
 return (
-    <div>
+    <div className="login">
         <h1>Login</h1>
 
         <form onSubmit={handleSubmit}>
             <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                type="username"
+                placeholder="please enter username"
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
             />
 
             <input
                 type="password"
-                placeholder="Password"
+                placeholder="please enter Password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
             />
@@ -57,9 +58,6 @@ return (
 
         {error && <p>{error}</p>}
 
-        <button onClick={() => navigate("/register")}>
-            Register
-        </button>
     </div>
 );
 
