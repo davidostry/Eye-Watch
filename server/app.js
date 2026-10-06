@@ -14,7 +14,7 @@ app.use(express.json());
 
 app.use(logger)
 
-app.use("/api", router)
+app.use("/api/alerts", router)
 
 app.listen(PORT, ()=>{
     console.log(`server runing on http//:localhost:${PORT}`);

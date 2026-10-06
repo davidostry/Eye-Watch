@@ -3,14 +3,14 @@ import { addAlert, editAlert, findAlertById, findAllAlerts, removeAlert } from "
 
 const router = Router();
 
-router.post("/alerts", addAlert);
+router.post("/", addAlert);
 
-router.get("/alerts", findAllAlerts);
+router.get("/", findAllAlerts);
 
-router.get("/alerts/:id", findAlertById);
+router.get("/:id", findAlertById);
 
-router.delete("/alerts/:id", removeAlert)
+router.delete("/:id", removeAlert)
 
-router.put("/alerts/:id", editAlert)
+router.put("/:id", editAlert)
 
 export default router;

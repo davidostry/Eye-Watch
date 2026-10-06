@@ -1,4 +1,4 @@
-import { createAlert, deleteAlert, getAlertById, getAllAlerts, updateAlert } from "../DAL/repository.js";
+import { createAlert, deleteAlert, getAlertById, getAllAlerts, updateAlert } from "../DAL/alerts.js";
 import { alertSchma } from "../schemas/alertSchema.js";
 
 export async function addAlert(req, res) {
