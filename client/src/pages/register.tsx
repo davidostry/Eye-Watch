@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { register } from "../api/users";
 import { useAuthStore } from "../store/authStore";
+import "../style/register.css"
 
 function Register() {
     const navigate = useNavigate();
-
-
+    const [assignedArena, setAssignedArena] = useState("")
+    const [role, setRole] = useState("")
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,7 +18,7 @@ function Register() {
         if (!token) {
             return;
         }
-});
+    });
 
     async function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
@@ -42,7 +43,7 @@ function Register() {
     }
 
     return (
-        <div>
+        <div className="register">
             <h1>Register</h1>
 
             <form onSubmit={handleSubmit}>
@@ -65,6 +66,18 @@ function Register() {
                     placeholder="Password"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
+                />
+                <input
+                    type="text"
+                    placeholder="role"
+                    value={role}
+                    onChange={(event) => setRole(event.target.value)}
+                />
+                <input
+                type="text"
+                placeholder="assignedArena"
+                value={assignedArena}
+                onChange={(event) => setAssignedArena(event.target.value)}
                 />
 
                 <button type="submit">

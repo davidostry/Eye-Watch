@@ -2,6 +2,7 @@ import AlertCard from "./AlertCard";
 
 import type { Alert } from "../types/alert";
 
+
 type AlertListProps = {
     alerts: Alert[];
     onSelect: (alert: Alert) => void;
@@ -24,7 +25,20 @@ function AlertList({
         );
     }
 
+    const Criticals = alerts.filter((alert)=>{
+        alert.priority === "Critical"
+        && alert.status === "Active"
+        
+    })
+    if (Criticals){
+        <div>
+            <h1>warning</h1>
+            <p>Multi-scene attack alert</p>
+        </div>
+    }
+
     return (
+        
         <div className="alert-list">
 
             {alerts.map((alert) => (

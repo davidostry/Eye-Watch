@@ -1,7 +1,4 @@
-#Tzofia eye
-
-###Description
-
+#Eye Watch
 
 ##Server
 
@@ -11,6 +8,8 @@ express
 MongoDB
 cors
 zod
+jwt
+bcrypt
 
 ###DataBase
 
@@ -24,12 +23,20 @@ POST /api/alerts
 DELETE /api/alerts/:id
 PUT /api/alerts/:id
 
+POST /api/auth/login
+GET /api/auth/me
+POST /api/auth/register
+DELETE api/auth/users/:id
+GET /api/auth/users
+
 ###Status codes
 
 200 request answered Successfully 
 201 created successfully
 204 deleted successfully
+209 conflict (user exists)
 400 bad request
+401 Unauthorized
 404 not found
 500 server error 
 
@@ -49,6 +56,7 @@ zustand
 axios
 leaflet
 react-leaflet
+react-router
 
 ###Running instructions(clyent)
 npm run dev
