@@ -16,6 +16,15 @@ export type User = {
     password: string;
     email: string;
     role: Role;
+    assignedArena: AssignedArena;
+}
+
+export type UserInput = {
+    
+    username: string;
+    password: string;
+    email: string;
+    role: Role;
     assignedArena: AssignedArena
 }
 

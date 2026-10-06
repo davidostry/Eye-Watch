@@ -6,11 +6,11 @@ import type {
 } from "../types/alert";
 
 const api = axios.create({
-    baseURL: "http://localhost:3001/api"
+    baseURL: "http://localhost:3001/api/alerts"
 });
 
 export async function getAlerts(): Promise<Alert[]> {
-    const response = await api.get<Alert[]>("/alerts");
+    const response = await api.get<Alert[]>("/");
 
     return response.data;
 }

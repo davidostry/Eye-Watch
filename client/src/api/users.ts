@@ -1,52 +1,66 @@
-import axios from "axios";
 
-import type {Alert,
-    AlertInput
-} from "../types/alert";
+import type { User } from "../types/users";
 
-const api = axios.create({
-    baseURL: "http://localhost:3001/api"
+const API_URL = "http://localhost:3001/api/auth";
+
+async function request<T>(
+endpoint: string,
+options: RequestInit = {}
+): Promise<T> {
+const response = await fetch(`${API_URL}${endpoint}`, {
+...options,
+headers: {
+"Content-Type": "application/json",
+...options.headers
+}
 });
 
-export async function getAlerts(): Promise<Alert[]> {
-    const response = await api.get<Alert[]>("/alerts");
+const data = await response.json();
 
-    return response.data;
+if (!response.ok) {
+    throw new Error(data.message || "Request failed");
 }
 
-export async function getAlertById(
-    id: string
-): Promise<Alert> {
-    const response = await api.get<Alert>(`/alerts/${id}`);
+return data;
 
-    return response.data;
+
 }
 
-export async function createAlert(
-    alert: AlertInput
-): Promise<Alert> {
-    const response = await api.post<Alert>(
-        "/alerts",
-        alert
-    );
-
-    return response.data;
+export async function login(email: string, password: string) {
+return request<{ token: string }>("/login", {
+method: "POST",
+body: JSON.stringify({
+email,
+password
+})
+});
 }
 
-export async function updateAlert(
-    id: string,
-    alert: AlertInput
-): Promise<Alert> {
-    const response = await api.put<Alert>(
-        `/alerts/${id}`,
-        alert
-    );
-
-    return response.data;
+export async function register(
+userName: string,
+email: string,
+password: string,
+token:string
+) {
+return request<User>("/register", {
+headers: {
+Authorization: `Bearer ${token}`
+},
+method: "POST",
+body: JSON.stringify({
+userName,
+email,
+password
+})
+});
 }
 
-export async function deleteAlert(
-    id: string
-): Promise<void> {
-    await api.delete(`/alerts/${id}`);
+export async function getDetails(token: string) {
+return request<User>("/me", {
+headers: {
+Authorization: `Bearer ${token}`
 }
+});
+}
+
+
