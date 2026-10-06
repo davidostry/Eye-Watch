@@ -1,6 +1,6 @@
 
-import { getUserByEmail, createUser, getUserById, deleteUser, getAllUsers } from "../DAL/users.js";
-import { userSchma } from "../schemas/userSchema.js";
+import { getUserByEmail, createUser, getUserById, deleteUser, getAllUsers, getUserByName } from "../DAL/users.js";
+import { loginSchema, userSchma } from "../schemas/userSchema.js";
 import { checkPassword, hashPassword } from "../service/bcrypt.js";
 import { generateToken } from "../service/jwt.js";
 
@@ -31,9 +31,9 @@ export async function register(req, res) {
 export async function login(req, res) {
     try {
 
-        const result = userSchma.safeParse(req.body);
+        const result = loginSchema.safeParse(req.body);
         if (!result.success) return res.status(400).json({ message: "missing details" });
-        const existsUser = await getUserByEmail(result.data.email);
+        const existsUser = await getUserByName(result.data.username);
         if (!existsUser) return res.status(404).json({ message: "user not exists" });
 
         const valid = await checkPassword(result.data.password, existsUser.hash)

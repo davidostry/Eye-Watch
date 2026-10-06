@@ -19,6 +19,10 @@ export async function getUserByEmail(email){
     return await users.findOne({email})
 }
 
+export async function getUserByName(username){
+    return await users.findOne({username})
+}
+
 export async function deleteUser(id){
     return await users.deleteOne({_id: new ObjectId(id)})
 }
