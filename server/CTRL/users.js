@@ -1,5 +1,5 @@
 
-import { getUserByEmail, createUser, getUserById, deleteUser } from "../DAL/users.js";
+import { getUserByEmail, createUser, getUserById, deleteUser, getAllUsers } from "../DAL/users.js";
 import { userSchma } from "../schemas/userSchema.js";
 import { checkPassword, hashPassword } from "../service/bcrypt.js";
 import { generateToken } from "../service/jwt.js";
@@ -71,10 +71,27 @@ export async function removeUser(req, res) {
         if (!user) return res.status(404).json({ message: "user not found" });
         await deleteUser(id);
         res.sendStatus(204);
-        
+
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "failed to get details" })
+
+    }
+
+}
+
+export async function showAllUsers(req, res) {
+    try {
+
+        const allUsers = await getAllUsers();
+        allUsers.map(u=>{
+            u.hash = "encoded"
+        })
+        res.json(allUsers)
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "failed to get users" })
 
     }
 
