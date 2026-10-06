@@ -1,5 +1,5 @@
 
-import { getUserByEmail, createUser, getUserById } from "../DAL/users.js";
+import { getUserByEmail, createUser, getUserById, deleteUser } from "../DAL/users.js";
 import { userSchma } from "../schemas/userSchema.js";
 import { checkPassword, hashPassword } from "../service/bcrypt.js";
 import { generateToken } from "../service/jwt.js";
@@ -49,11 +49,10 @@ export async function login(req, res) {
 
 }
 
-export async function getUserDetails(req, res){
-        try {
-        const { id } = req.user
-
-        const user = await getUserById(id)
+export async function getUserDetails(req, res) {
+    try {
+        const { email } = req.body
+        const user = await getUserByEmail(email)
         if (!user) return res.status(404).json({ message: "user not found" })
 
         delete (user.hash)
@@ -62,6 +61,20 @@ export async function getUserDetails(req, res){
         console.log(error);
         res.status(500).json({ message: "failed to get details" })
 
+    }
+}
+
+export async function removeUser(req, res) {
+    try {
+        const { id } = req.params
+        const user = await getUserById(id);
+        if (!user) return res.status(404).json({ message: "user not found" });
+        await deleteUser(id);
+        res.sendStatus(204);
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "failed to get details" })
 
     }
 

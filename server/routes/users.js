@@ -1,13 +1,15 @@
 import { Router } from "express";
-import { getUserDetails, login, register } from "../CTRL/users.js";
+import { getUserDetails, login, register, removeUser } from "../CTRL/users.js";
 import { auth, authorization } from "../middleware/auth.js";
 
-const router = Router()
+const router = Router();
 
-router.post("/register",auth, authorization, register)
+router.post("/register",auth, authorization, register);
 
-router.post("/login", login)
+router.post("/login", login);
 
-router.get("/me",auth, getUserDetails)
+router.get("/me",auth, getUserDetails);
+
+router.delete("/users/:id",auth, authorization, removeUser)
 
 export default router
