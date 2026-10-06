@@ -4,7 +4,7 @@ import { ObjectId } from "mongodb";
 const users = db.collection("users");
 
 export async function createUser(user){
-    return await users.insertOne(user)
+    return (await users.insertOne(user))
 }
 
 export async function getAllUsers(){
