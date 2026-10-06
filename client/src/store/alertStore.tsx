@@ -5,7 +5,7 @@ import {
     createAlert,
     updateAlert,
     deleteAlert
-} from "../api/api";
+} from "../api/alerts";
 
 import type {
     Alert,
